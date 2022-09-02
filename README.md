@@ -3,7 +3,7 @@ Hello, this is my third project on <a href="https://www.start2impact.it/">start2
 
 The purpose is to make it easy to access to life scores on a chosen city of interest. In order to do so, an API was used. The external service used here is <a href="https://developers.teleport.org/api/">Teleport</a>.
 
-You can try my project <a href="#">HERE</a> on Netlify.
+You can try my project <a href="https://citypollution-s2i-annamiolato.netlify.app/">HERE</a> on Netlify.
 
 # How to use
 This project is so easy to use. You have to add your favourite city in the search bar and city's scores will appear.
@@ -34,6 +34,7 @@ p.s. Pay attention, you can't find all city. This doesn't depend on my project, 
 In this code you can see my first approach to an API.
 
 I used CSS and some Bootstrap to fixed a little bit of style, but for the majority of the code I used JavaScript.
+I also used Vite as bundle for this project.
 
 # Credits
 I have to thank some people for this project.

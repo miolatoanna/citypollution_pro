@@ -1,0 +1,139 @@
+@import "bootstrap/dist/css/bootstrap.min.css";
+
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+#app {
+  text-align: center;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: radial-gradient(white, lightgrey);
+}
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+h1 {
+  font-family: 'Lobster', cursive;
+  font-size: 50px;
+  margin-top: 100px;
+  margin-bottom: 60px;
+  color: darkslategrey;
+}
+
+.box {
+  display: flex;
+  justify-content: center;
+  width: 75%;
+  margin: 0 auto;
+  background-color: rgb(154, 187, 199);
+  padding: 20px 10px 20px 10px;
+  border-radius: 12px;
+}
+
+.inputBox {
+  position: relative;
+  top: 80px;
+  height: 150px;
+}
+
+.input {
+  height: 60px;
+  width: 90%;
+  outline: none;
+  border: 1px solid black;
+  margin: 0 50px 20px 0;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.photo {
+  width: 45%;
+  border-radius: 8px;
+}
+
+.vienna {
+  width: 70%;
+  margin: 0 auto;
+  margin-bottom: 40px;
+  font-size: 20px;
+}
+
+#summary {
+  font-size: 20px;
+  width: 70%;
+  margin: 0 auto;
+  margin-bottom: 50px;
+  margin-top: 40px;
+}
+
+#categories {
+  font-size: 20px;
+  font-weight: bold;
+  width: 70%;
+  margin: 0 auto;
+  margin-bottom: 40px;
+}
+
+footer {
+  margin-bottom: 10px;
+}
+
+
+@media only screen and (max-width: 600px) {
+  h1 {
+      margin: 20px 0 20px 0;
+      font-size: 48px;
+  }
+
+  .vienna {
+      font-size: 18px;
+      width: 90%;
+  }
+
+  .box {
+      width: 100%;
+      padding: 20px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      flex-wrap: wrap; 
+  } 
+
+  .inputBox {
+      height: 200px;
+      margin-bottom: 50px;
+  }
+
+  .input {
+      width: 80%;
+      align-items: center;  
+      margin: 0 0 10px 0;
+  }
+
+  .photo {
+      width: 100%;
+  }
+
+  #btn {
+      margin-bottom: 40px;
+  }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 800px) {
+  .inputBox {
+      position: relative;
+      top: 20px;
+  }
+}

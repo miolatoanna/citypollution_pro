@@ -1,7 +1,8 @@
 import "./assets/style/style.css";
 import imgUrl from "./assets/img/Vienna.jpg";
+const app = document.querySelector("#app");
 
-document.querySelector("#app").innerHTML = `
+app.innerHTML = `
 <h1>Search a city and look at its quality of life</h1>
 
 <div class="vienna">
@@ -12,93 +13,75 @@ document.querySelector("#app").innerHTML = `
 
 
 <div class="box">
-    <div class="inputBox">
+    <form class="inputBox">
         <input type="text" id="textArea" class="input" placeholder="Write here a city..." required=""/>
-        <button type="submit" class="btn btn-outline-dark btn-lg" id="btn">Let's Go</input>
-    </div>
-        <img src="./assets/img/Vienna.jpg" alt="Image of Vienna" class="photo" id="photo"/>
+        <button type="submit" class="btn btn-outline-dark btn-lg" id="btn">Let's Go</button>
+    </form>
+        <img src="${imgUrl}" alt="Image of Vienna" class="photo" id="photo"/>
 </div>
 
 
-    <div id="summary"></div>
-    <div id="categories"></div>
+<div id="summary"></div>
+<div id="categories"></div>
 
 <footer>Made with &#x2764; by &#0169;Anna Miolato, 2022</footer>
 `;
 
-//Add variables 
-const btn = document.getElementById("btn");
 const textArea = document.getElementById("textArea");
-let city;
 const summary = document.getElementById("summary");
 const categories = document.getElementById("categories");
-
-document.getElementById("photo").src = imgUrl;
+const form = document.getElementsByClassName("inputBox")[0];
 
 //Add button event on click
-btn.addEventListener("click", (e) => {
-  if (textArea.value == "") {
-    e.preventDefault();
-    getError("Please add a city.");
-  } else {
-    city = correctInput(textArea.value);
-    summary.innerHTML = "";
-    summary.style.color = "black";
-    categories.innerHTML = "";
-
-    getData();
-  }
-});
-
-// Add event on submit
-textArea.addEventListener("keyup", function (event) {
-  event.preventDefault();
-  if (event.key === "Enter") {
-    btn.click();
-  }
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  summary.innerHTML = "";
+  summary.style.color = "black";
+  categories.innerHTML = "";
+  fetchData(correctInput(textArea.value));
 });
 
 // Fetch API function
-async function getData() {
-  const response = await fetch(
-    `https://api.teleport.org/api/urban_areas/slug:${city}/scores/`
-  );
-  if (response.status !== 404) {
-    const text = await response.json();
-    const { categories, summary } = text;
+const fetchData = async (city) => {
+  try {
+    const response = await fetch(
+      `https://api.teleport.org/api/urban_areas/slug:${city}/scores/`
+    );
+    if (response.status === 200) {
+      const text = await response.json();
+      const { categories, summary } = text;
 
-    //Open description's city in html page
-    const paragr = document.getElementById("summary");
-    paragr.insertAdjacentHTML("afterbegin", summary);
+      //Open description's city in html page
+      const paragr = document.getElementById("summary");
+      paragr.insertAdjacentHTML("afterbegin", summary);
 
-    //Open categories & scores in html page
-    text.categories.forEach((e, i) => {
-      const elem = document.createElement("div");
-      elem.id = `cat${i}`;
-      elem.textContent = `${e.name}: ${e.score_out_of_10.toFixed(2)}`;
-      elem.setAttribute("style", `color: ${e.color};`);
-      document.getElementById("categories").appendChild(elem);
+      //Open categories & scores in html page
+      categories.forEach((e, i) => {
+        const elem = document.createElement("div");
+        elem.id = `cat${i}`;
+        elem.textContent = `${e.name}: ${e.score_out_of_10.toFixed(2)}`;
+        elem.setAttribute("style", `color: ${e.color};`);
+        document.getElementById("categories").appendChild(elem);
 
-      // Show score with window scroll page
-      window.scrollTo(300, 500);
-    });
-  } else {
-    getError("This city is not avaiable, please try again.");
+        // Show score with window scroll page
+        window.scrollTo(300, 500);
+      });
+      return;
+    }
+    showError("The requested city is not available.");
+  } catch (e) {
+    showError(
+      "There was an error from the server, please try later."
+    );
   }
-}
+};
 
 //Function to adjust input research without empty space or uppercase
-function correctInput(input) {
-  input = input.toLowerCase();
-  input = input.replace(" ", "-");
-  return input;
-}
+const correctInput = (input) => input.toLowerCase().replace(" ", "-");
 
 // Function to manage errors
-function getError(errorMessage) {
-  errorMessage = `${errorMessage} Write it in English.`
+const showError = (errorMessage) => {
   summary.style.color = "red";
-  summary.innerHTML = errorMessage;
+  summary.innerHTML = `${errorMessage} Write it in English.`;
   categories.innerHTML = "";
-  return errorMessage;
-}
+};
